@@ -45,6 +45,7 @@ history *start, *slast;
 void show_cin_info();
 void show_prompt();
 void push_instruction(char* buf, size_t len);
+void push_macro(char* buf, size_t len);
 void write_to_file();
 void delete_files();
 int compile_and_run();
@@ -89,12 +90,16 @@ int main() {
         if (len > 2 && line[0] == ':' && line[1] == 'q') {
             running = OFF;
         } else {
-            push_instruction(line, len);
+            if (line[0] == '#') {
+                push_macro(line, len);
+            } else {
+                push_instruction(line, len);
+            }
             write_to_file();
 
             compile_and_run();
 
-            delete_files();
+            // delete_files();
         }
     }
 
@@ -115,6 +120,34 @@ void push_instruction(char* buf, size_t len) {
         slast = slast->next;
     }
     slast->next = tmp;
+}
+
+void push_macro(char* buf, size_t len) {
+    static history *tmp;
+    tmp = malloc(sizeof(history));
+
+    strcpy(tmp->buffer, buf);
+    tmp->length = len;
+    tmp->next = NULL;
+
+    if (!strncmp("#include", buf, 8)) {
+        tmp->next = start;
+        start = tmp;
+    } else {
+        history *it = start;
+        history *prev = NULL;
+        while (strncmp("int main", it->buffer, 8)) {
+            prev = it;
+            it = it->next;
+        }
+
+        tmp->next = it;
+        if (prev == NULL) {
+            start = tmp;
+        } else {
+            prev->next = tmp;
+        }
+    }
 }
 
 void write_to_file() {
@@ -143,7 +176,9 @@ void delete_files() {
 }
 
 int compile_and_run() {
-    int exec_status;
+    static int exec_status;
+
+    exec_status = -1;
 
     if (fork() == 0) {
         int ret = execlp("gcc", "gcc", FILENAME_C, "-o", OUTPUT, (char*)NULL);
