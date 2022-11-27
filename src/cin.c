@@ -50,10 +50,9 @@ int main() {
 
     show_cin_info();
 
-    start = malloc(sizeof(history));
-
     _x_ = MAX_STRING_SIZE;
     line = buffer;
+    init_history();
     while (running == ON) {
         show_prompt();
         len = getline(&line, &_x_, stdin);

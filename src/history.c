@@ -52,6 +52,8 @@ void push_macro(char* buf, size_t len) {
 }
 
 void init_history() {
+    start = malloc(sizeof(history));
+    
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
     last = start;
