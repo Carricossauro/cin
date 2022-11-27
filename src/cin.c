@@ -46,7 +46,7 @@ void show_cin_info();
 void show_prompt();
 void push_instruction(char* buf, size_t len);
 void write_to_file();
-void delete_file();
+void delete_files();
 int compile_and_run();
 
 /*************************************************************/
@@ -54,9 +54,7 @@ int compile_and_run();
 /*************************************************************/
 
 void show_cin_info() {
-    printf("cin - CLI interpreter for C");
-    printf("\n");
-    printf("%s", CIN_VERSION);
+    printf("cin - %s", CIN_VERSION);
 }
 
 void show_prompt() {
@@ -96,7 +94,7 @@ int main() {
 
             compile_and_run();
 
-            delete_file();
+            delete_files();
         }
     }
 
@@ -139,8 +137,9 @@ void write_to_file() {
     } else exit(errno);
 }
 
-void delete_file() {
+void delete_files() {
     remove(FILENAME_C);
+    remove(OUTPUT);
 }
 
 int compile_and_run() {
