@@ -7,7 +7,6 @@
 #include "history.h"
 
 #define CIN_VERSION     "1.0v"
-#define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
 
 /*************************************************************/
 /*                      LOCAL TYPEDEFS                       */
@@ -55,9 +54,6 @@ int main() {
 
     _x_ = MAX_STRING_SIZE;
     line = buffer;
-    strcpy(start->buffer, MAIN_SIGNATURE);
-    start->length = strlen(MAIN_SIGNATURE);
-    last = start;
     while (running == ON) {
         show_prompt();
         len = getline(&line, &_x_, stdin);

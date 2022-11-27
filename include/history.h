@@ -15,5 +15,6 @@ extern history *start, *last;
 
 void push_instruction(char* buf, size_t len);
 void push_macro(char* buf, size_t len);
+void init_history();
 
 #endif // HISTORY

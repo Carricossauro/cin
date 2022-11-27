@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
+
 /**
  * start - beginning of code history
  * last - second to last of code history
@@ -47,4 +49,10 @@ void push_macro(char* buf, size_t len) {
             prev->next = tmp;
         }
     }
+}
+
+void init_history() {
+    strcpy(start->buffer, MAIN_SIGNATURE);
+    start->length = strlen(MAIN_SIGNATURE);
+    last = start;
 }
