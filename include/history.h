@@ -2,6 +2,7 @@
 #define HISTORY
 
 #include "macros.h"
+
 #include <stddef.h>
 
 typedef struct history_t {
@@ -11,5 +12,8 @@ typedef struct history_t {
 } history;
 
 extern history *start, *last;
+
+void push_instruction(char* buf, size_t len);
+void push_macro(char* buf, size_t len);
 
 #endif // HISTORY
