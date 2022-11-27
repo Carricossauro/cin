@@ -1,16 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <errno.h>
-#include <wait.h>
 #include <sys/stat.h>
 
+#include "files.h"
+#include "history.h"
+
 #define CIN_VERSION     "1.0v"
-#define MAX_STRING_SIZE 1024
-#define FILENAME_C      "/tmp/cin/tmp_code.c"
-#define OUTPUT          "/tmp/cin/out.app"
 #define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
 
 /*************************************************************/
@@ -22,22 +18,6 @@ typedef enum {
     OFF
 } status;
 
-typedef struct history_t {
-    char buffer[MAX_STRING_SIZE];
-    size_t length;
-    struct history_t *next;
-} history;
-
-/*************************************************************/
-/*                      LOCAL VARIABLES                      */
-/*************************************************************/
-
-/**
- * start - beginning of code history
- * slast - second to last of code history
-*/
-history *start, *slast;
-
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
 /*************************************************************/
@@ -46,9 +26,6 @@ void show_cin_info();
 void show_prompt();
 void push_instruction(char* buf, size_t len);
 void push_macro(char* buf, size_t len);
-void write_to_file();
-void delete_files();
-int compile_and_run();
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
@@ -82,7 +59,7 @@ int main() {
     line = buffer;
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
-    slast = NULL;
+    last = start;
     while (running == ON) {
         show_prompt();
         len = getline(&line, &_x_, stdin);
@@ -99,7 +76,7 @@ int main() {
 
             compile_and_run();
 
-            // delete_files();
+            delete_files();
         }
     }
 
@@ -114,12 +91,8 @@ void push_instruction(char* buf, size_t len) {
     tmp->length = len;
     tmp->next = NULL;
     
-    if (slast == NULL) {
-        slast = start;
-    } else {
-        slast = slast->next;
-    }
-    slast->next = tmp;
+    last->next = tmp;
+    last = tmp;
 }
 
 void push_macro(char* buf, size_t len) {
@@ -148,55 +121,4 @@ void push_macro(char* buf, size_t len) {
             prev->next = tmp;
         }
     }
-}
-
-void write_to_file() {
-    static int file;
-    file = open(FILENAME_C, O_WRONLY | O_CREAT, 0666);
-
-    if (file > 0) {
-        history *it;
-
-        it = start;
-        while (it) {
-            write(file, it->buffer, it->length);
-
-            it = it->next;
-        }
-
-        write(file, "}\n", 2);
-
-        close(file);
-    } else exit(errno);
-}
-
-void delete_files() {
-    remove(FILENAME_C);
-    remove(OUTPUT);
-}
-
-int compile_and_run() {
-    static int exec_status;
-
-    exec_status = -1;
-
-    if (fork() == 0) {
-        int ret = execlp("gcc", "gcc", FILENAME_C, "-o", OUTPUT, (char*)NULL);
-
-        _exit(ret);
-    } else {
-        (void)wait(&exec_status);
-    }
-
-    if (!exec_status) {
-        if (fork() == 0) {
-            int ret = execlp(OUTPUT, OUTPUT, (char*)NULL);
-
-            _exit(ret);
-        } else {
-           (void)wait(&exec_status);
-        }
-    }
-
-    return exec_status;
 }
