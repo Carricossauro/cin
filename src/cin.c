@@ -6,7 +6,7 @@
 #include "files.h"
 #include "history.h"
 
-#define CIN_VERSION     "1.0v"
+#define CIN_VERSION     "v1.0.0"
 
 /*************************************************************/
 /*                      LOCAL TYPEDEFS                       */
