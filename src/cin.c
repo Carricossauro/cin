@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 
 #define CIN_VERSION     "1.0v"
-#define MAX_STRING_SIZE 512
+#define MAX_STRING_SIZE 1024
 #define FILENAME_C      "/tmp/cin/tmp_code.c"
 #define OUTPUT          "/tmp/cin/out.app"
 #define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
