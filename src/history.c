@@ -14,7 +14,7 @@ code_history *start, *last;
 /**
  * macro_start - beginning of macro_history 
 */
-macro_history *macro_start;
+macro_history *macro_start, *macro_last;
 
 void push_instruction(char* buf, size_t len) {
     static code_history *tmp;
@@ -35,6 +35,10 @@ void push_macro(char* buf, size_t len) {
     strcpy(tmp->buffer, buf);
     tmp->length = len;
     tmp->next = NULL;
+
+    if (macro_last == NULL) {
+        macro_last = tmp;
+    }
 
     if (!strncmp("#include", buf, 8)) {
         tmp->next = macro_start;
@@ -58,6 +62,7 @@ void push_macro(char* buf, size_t len) {
 void init_history() {
     start = malloc(sizeof(code_history));
     macro_start = NULL;
+    macro_last = NULL;
     
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
