@@ -14,14 +14,6 @@ void write_to_file() {
 
     if (file > 0) {
         code_history *it;
-        macro_history *mit;
-
-        mit = macro_start;
-        while(mit) {
-            write(file, mit->buffer, mit->length);
-
-            mit = mit->next;
-        }
 
         it = start;
         while (it) {

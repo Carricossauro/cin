@@ -61,7 +61,7 @@ int main() {
             running = OFF;
         } else {
             if (line[0] == '#') {
-                push_macro(line, len);
+                // ignore macro
             } else {
                 push_instruction(line, len);
             }
