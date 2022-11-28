@@ -19,7 +19,7 @@ typedef struct macro_history_t {
     struct macro_history_t *next;
 } macro_history;
 
-extern macro_history *start;
+extern macro_history *macro_start;
 
 void push_instruction(char* buf, size_t len);
 void push_macro(char* buf, size_t len);
