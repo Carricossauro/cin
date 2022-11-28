@@ -53,7 +53,7 @@ int main() {
     _x_ = MAX_STRING_SIZE;
     line = buffer;
     init_history();
-    while (running == ON) {
+    while (running != OFF) {
         show_prompt();
         len = getline(&line, &_x_, stdin);
 
