@@ -13,7 +13,15 @@ void write_to_file() {
     file = open(FILENAME_C, O_WRONLY | O_CREAT, 0666);
 
     if (file > 0) {
-        history *it;
+        code_history *it;
+        macro_history *mit;
+
+        mit = macro_start;
+        while(mit) {
+            write(file, mit->buffer, mit->length);
+
+            mit = mit->next;
+        }
 
         it = start;
         while (it) {

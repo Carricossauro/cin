@@ -6,14 +6,19 @@
 #define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
 
 /**
- * start - beginning of code history
- * last - second to last of code history
+ * start - beginning of code_history
+ * last - second to last of code_history
 */
-history *start, *last;
+code_history *start, *last;
+
+/**
+ * macro_start - beginning of macro_history 
+*/
+macro_history *macro_start;
 
 void push_instruction(char* buf, size_t len) {
-    static history *tmp;
-    tmp = malloc(sizeof(history));
+    static code_history *tmp;
+    tmp = malloc(sizeof(code_history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
@@ -24,35 +29,35 @@ void push_instruction(char* buf, size_t len) {
 }
 
 void push_macro(char* buf, size_t len) {
-    static history *tmp;
-    tmp = malloc(sizeof(history));
+    static macro_history *tmp;
+    tmp = malloc(sizeof(macro_history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
     tmp->next = NULL;
 
     if (!strncmp("#include", buf, 8)) {
-        tmp->next = start;
-        start = tmp;
+        tmp->next = macro_start;
+        macro_start = tmp;
     } else {
-        history *it = start;
-        history *prev = NULL;
-        while (strncmp("int main", it->buffer, 8)) {
-            prev = it;
-            it = it->next;
-        }
-
-        tmp->next = it;
-        if (prev == NULL) {
-            start = tmp;
+        if (macro_start == NULL) {
+            macro_start = tmp;
         } else {
-            prev->next = tmp;
+            macro_history *it;
+
+            it = macro_start;
+            while (it->next != NULL) {
+                it = it->next;
+            }
+
+            it->next = tmp;
         }
     }
 }
 
 void init_history() {
-    start = malloc(sizeof(history));
+    start = malloc(sizeof(code_history));
+    macro_start = NULL;
     
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
