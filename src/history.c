@@ -55,9 +55,8 @@ void push_macro(char* buf, size_t len) {
             }
 
             it->next = tmp;
+            macro_last = tmp;
         }
-
-        macro_last = tmp;
     }
 }
 
