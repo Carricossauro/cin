@@ -13,7 +13,7 @@ void write_to_file() {
     file = open(FILENAME_C, O_WRONLY | O_CREAT, 0666);
 
     if (file > 0) {
-        history *it;
+        code_history *it;
 
         it = start;
         while (it) {

@@ -5,13 +5,13 @@
 
 #include <stddef.h>
 
-typedef struct history_t {
+typedef struct code_history_t {
     char buffer[MAX_STRING_SIZE];
     size_t length;
-    struct history_t *next, *prev;
-} history;
+    struct code_history_t *next, *prev;
+} code_history;
 
-extern history *start, *last;
+extern code_history *start, *last;
 
 void push_instruction(char* buf, size_t len);
 void push_macro(char* buf, size_t len);

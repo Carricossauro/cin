@@ -6,14 +6,14 @@
 #define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
 
 /**
- * start - beginning of code history
- * last - second to last of code history
+ * start - beginning of code_history
+ * last - second to last of code_history
 */
-history *start, *last;
+code_history *start, *last;
 
 void push_instruction(char* buf, size_t len) {
-    static history *tmp;
-    tmp = malloc(sizeof(history));
+    static code_history *tmp;
+    tmp = malloc(sizeof(code_history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
@@ -24,8 +24,8 @@ void push_instruction(char* buf, size_t len) {
 }
 
 void push_macro(char* buf, size_t len) {
-    static history *tmp;
-    tmp = malloc(sizeof(history));
+    static code_history *tmp;
+    tmp = malloc(sizeof(code_history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
@@ -35,8 +35,8 @@ void push_macro(char* buf, size_t len) {
         tmp->next = start;
         start = tmp;
     } else {
-        history *it = start;
-        history *prev = NULL;
+        code_history *it = start;
+        code_history *prev = NULL;
         while (strncmp("int main", it->buffer, 8)) {
             prev = it;
             it = it->next;
@@ -52,7 +52,7 @@ void push_macro(char* buf, size_t len) {
 }
 
 void init_history() {
-    start = malloc(sizeof(history));
+    start = malloc(sizeof(code_history));
     
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
