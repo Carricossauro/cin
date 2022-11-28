@@ -23,6 +23,7 @@ typedef enum {
 
 void show_cin_info();
 void show_prompt();
+void handle_exit();
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
@@ -34,6 +35,10 @@ void show_cin_info() {
 
 void show_prompt() {
     printf("\n>> ");
+}
+
+void handle_exit() {
+    delete_dir();
 }
 
 int main() {
@@ -72,6 +77,8 @@ int main() {
             delete_files();
         }
     }
+
+    handle_exit();
 
     return 0;
 }
