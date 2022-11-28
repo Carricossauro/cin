@@ -2,7 +2,7 @@ CC := gcc
 SCRDIR := src
 INCDIR := include
 BUILDDIR := build
-CFLAGS := -g
+CFLAGS :=
 LIB := -L lib
 INC := -I $(INCDIR)
 
