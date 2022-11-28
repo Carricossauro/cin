@@ -14,6 +14,7 @@ typedef struct code_history_t {
 extern code_history *start, *last;
 
 void push_instruction(char* buf, size_t len);
+void pop_instruction();
 void push_macro(char* buf, size_t len);
 void init_history();
 
