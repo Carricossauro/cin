@@ -13,7 +13,9 @@
 /*************************************************************/
 
 typedef enum {
-    ON,
+    START,
+    MACRO,
+    CODE,
     OFF
 } status;
 
@@ -37,7 +39,7 @@ void show_prompt() {
 }
 
 int main() {
-    status running = ON;
+    status running = START;
     char buffer[MAX_STRING_SIZE];
     char *line;
     size_t len;
