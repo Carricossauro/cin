@@ -21,6 +21,14 @@ typedef struct macro_history_t {
 
 extern macro_history *macro_start;
 
+typedef struct include_history_t {
+    char buffer[MAX_STRING_SIZE];
+    size_t length;
+    struct include_history_t *next;
+} include_history;
+
+extern include_history *include_start;
+
 void push_instruction(char* buf, size_t len);
 void push_macro(char* buf, size_t len);
 void init_history();
