@@ -33,6 +33,10 @@ void delete_files() {
     remove(OUTPUT);
 }
 
+void delete_dir() {
+    remove("/tmp/cin");
+}
+
 int compile_and_run() {
     static int exec_status;
 
