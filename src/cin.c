@@ -14,7 +14,7 @@
 /*                      DEFINE SECTION                       */
 /*************************************************************/
 
-#define CIN_VERSION     "v1.2.0"
+#define CIN_VERSION     "v1.2.1"
 
 #define ON      0x1u
 #define CODE    0x2u

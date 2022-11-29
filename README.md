@@ -14,7 +14,7 @@ gcc
 
 To run cin:
 ```
-git clone https://github.com/Carricossauro/cin
+git clone https://github.com/Carricossauro/cin --branch v1.2.1
 cd cin
 make all
 ./bin/cin
@@ -22,7 +22,7 @@ make all
 
 To install cin system wide:
 ```
-git clone https://github.com/Carricossauro/cin
+git clone https://github.com/Carricossauro/cin --branch v1.2.1
 cd cin
 make all
 cp bin/cin /bin/cin
