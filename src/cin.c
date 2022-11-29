@@ -6,7 +6,7 @@
 #include "files.h"
 #include "history.h"
 
-#define CIN_VERSION     "v1.1.0"
+#define CIN_VERSION     "v1.2.0"
 
 #define ON      0x1u
 #define CODE    0x2u
