@@ -24,7 +24,7 @@ typedef struct include_history_t {
 } include_history;
 
 extern code_history *start, *last;
-extern macro_history *macro_start*, *macro_last;
+extern macro_history *macro_start, *macro_last;
 extern include_history *include_start, *include_last;
 
 void push_instruction(char* buf, size_t len);
