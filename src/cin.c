@@ -8,14 +8,7 @@
 
 #define CIN_VERSION     "v1.1.0"
 
-/*************************************************************/
-/*                      LOCAL TYPEDEFS                       */
-/*************************************************************/
-
-typedef enum {
-    ON,
-    OFF
-} status;
+#define ON 0x1u
 
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
@@ -42,7 +35,7 @@ void handle_exit() {
 }
 
 int main() {
-    status running = ON;
+    unsigned char status = ON;
     char buffer[MAX_STRING_SIZE];
     char *line;
     size_t len;
@@ -59,12 +52,12 @@ int main() {
     _x_ = MAX_STRING_SIZE;
     line = buffer;
     init_history();
-    while (running == ON) {
+    while (status & ON) {
         show_prompt();
         len = getline(&line, &_x_, stdin);
 
         if (len > 2 && line[0] == ':' && line[1] == 'q') {
-            running = OFF;
+            status &= ~ON;
         } else {
             if (line[0] == '#') {
                 // ignore macro
