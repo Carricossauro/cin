@@ -10,6 +10,7 @@
 
 #define ON      0x1u
 #define CODE    0x2u
+#define INCLUDE 0x4u
 
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
@@ -61,7 +62,10 @@ int main() {
             status &= ~ON;
         } else {
             if (line[0] == '#') {
-                // ignore macro
+                if (!strncmp("#include", line, 8)) {
+                    push_include(line, len);
+                    status |= INCLUDE;
+                }
             } else {
                 push_instruction(line, len);
                 status |= CODE;

@@ -14,6 +14,14 @@ void write_to_file() {
 
     if (file > 0) {
         code_history *it;
+        include_history *iit;
+
+        iit = include_start;
+        while (iit) {
+            write(file, iit->buffer, iit->length);
+
+            iit = iit->next;
+        }
 
         it = start;
         while (it) {
