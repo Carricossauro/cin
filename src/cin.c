@@ -21,6 +21,11 @@
 #define INCLUDE 0x4u
 #define MACRO   0x8u
 
+#define INCLUDE_STR      "#include"
+#define INCLUDE_STR_SIZE 8
+#define DEFINE_STR       "#define"
+#define DEFINE_STR_SIZE  7
+
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
 /*************************************************************/
@@ -60,10 +65,10 @@ int main() {
             status &= ~ON;
         } else {
             if (line[0] == '#') {
-                if (!strncmp("#include", line, 8)) {
+                if (!strncmp(INCLUDE_STR, line, INCLUDE_STR_SIZE)) {
                     push_include(line, len);
                     status |= INCLUDE;
-                } else {
+                } else if (!strncmp(DEFINE_STR, line, DEFINE_STR_SIZE)) {
                     push_macro(line, len);
                     status |= MACRO;
                 }
