@@ -30,6 +30,7 @@ extern include_history *include_start, *include_last;
 void push_instruction(char* buf, size_t len);
 void push_include(char* buf, size_t len);
 void pop_instruction();
+void pop_include();
 void push_macro(char* buf, size_t len);
 void init_history();
 

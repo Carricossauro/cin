@@ -3,7 +3,7 @@ SCRDIR := src
 INCDIR := include
 BUILDDIR := build
 BINDIR := bin
-CFLAGS :=
+CFLAGS := -g
 LIB := -L lib
 INC := -I $(INCDIR)
 

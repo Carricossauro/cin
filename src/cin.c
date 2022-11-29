@@ -76,6 +76,10 @@ int main() {
             if (compile_status != 0) {
                 if (status & CODE) {
                     pop_instruction();
+                    status &= ~CODE;
+                } else if (status & INCLUDE) {
+                    pop_include();
+                    status &= ~INCLUDE;
                 }
             }
 

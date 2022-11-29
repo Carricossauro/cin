@@ -54,6 +54,19 @@ void push_include(char* buf, size_t len) {
     }
 }
 
+void pop_include() {
+    if (include_last == include_start) {
+        free(include_start);
+        include_start = NULL;
+        include_last = NULL;
+    } else {
+        include_last = include_last->prev;
+
+        free(include_last->next);
+        include_last->next = NULL;
+    }
+}
+
 void pop_instruction() {
     last = last->prev;
 
