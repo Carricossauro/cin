@@ -1,9 +1,21 @@
+/*************************************************************/
+/*                      INCLUDE SECTION                      */
+/*************************************************************/
+
 #include "history.h"
 
 #include <string.h>
 #include <stdlib.h>
 
+/*************************************************************/
+/*                      DEFINE SECTION                       */
+/*************************************************************/
+
 #define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
+
+/*************************************************************/
+/*                     LOCAL VARIABLES                       */
+/*************************************************************/
 
 /**
  * start - beginning of code_history
@@ -22,6 +34,10 @@ macro_history *macro_start, *macro_last;
  * include_last - second to last of include_history
 */
 include_history *include_start, *include_last;
+
+/*************************************************************/
+/*                   FUNCTION IMPLEMENTATION                 */
+/*************************************************************/
 
 void push_instruction(char* buf, size_t len) {
     static code_history *tmp;
