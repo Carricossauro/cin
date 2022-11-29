@@ -1,3 +1,7 @@
+/*************************************************************/
+/*                      INCLUDE SECTION                      */
+/*************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,6 +9,10 @@
 
 #include "files.h"
 #include "history.h"
+
+/*************************************************************/
+/*                      DEFINE SECTION                       */
+/*************************************************************/
 
 #define CIN_VERSION     "v1.2.0"
 
@@ -20,22 +28,11 @@
 void show_cin_info();
 void show_prompt();
 void handle_exit();
+void clear_flags();
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
-
-void show_cin_info() {
-    printf("cin - %s", CIN_VERSION);
-}
-
-void show_prompt() {
-    printf("\n>> ");
-}
-
-void handle_exit() {
-    delete_dir();
-}
 
 int main() {
     unsigned char status = ON;
@@ -86,9 +83,8 @@ int main() {
                     pop_macro();
                 }
             }
-            status &= ~CODE;
-            status &= ~INCLUDE;
-            status &= ~MACRO;
+
+            clear_flags(&status);
 
             delete_files();
         }
@@ -97,4 +93,22 @@ int main() {
     handle_exit();
 
     return 0;
+}
+
+void show_cin_info() {
+    printf("cin - %s", CIN_VERSION);
+}
+
+void show_prompt() {
+    printf("\n>> ");
+}
+
+void handle_exit() {
+    delete_dir();
+}
+
+void clear_flags(unsigned char *status) {
+    *status &= ~CODE;
+    *status &= ~INCLUDE;
+    *status &= ~MACRO;
 }
