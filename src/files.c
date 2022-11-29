@@ -15,12 +15,20 @@ void write_to_file() {
     if (file > 0) {
         code_history *it;
         include_history *iit;
+        macro_history *mit;
 
         iit = include_start;
         while (iit) {
             write(file, iit->buffer, iit->length);
 
             iit = iit->next;
+        }
+
+        mit = macro_start;
+        while (mit) {
+            write(file, mit->buffer, mit->length);
+
+            mit = mit->next;
         }
 
         it = start;
