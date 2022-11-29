@@ -36,6 +36,24 @@ void push_instruction(char* buf, size_t len) {
     last = tmp;
 }
 
+void push_include(char* buf, size_t len) {
+    static include_history *tmp;
+    tmp = malloc(sizeof(include_history));
+
+    strcpy(tmp->buffer, buf);
+    tmp->length = len;
+    tmp->next = NULL;
+    tmp->prev = include_last;
+
+    if (include_start == NULL) {
+        include_start = tmp;
+        include_last = tmp;
+    } else {
+        include_last->next = tmp;
+        include_last = tmp;
+    }
+}
+
 void pop_instruction() {
     last = last->prev;
 
@@ -50,4 +68,7 @@ void init_history() {
     start->length = strlen(MAIN_SIGNATURE);
     last = start;
     last->prev = NULL;
+
+    include_start = NULL;
+    include_last = NULL;
 }
