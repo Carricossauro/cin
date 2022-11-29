@@ -39,3 +39,28 @@ To remove cin system wide:
 ```
 sudo rm -f /bin/cin
 ```
+
+## For developers (for me basically)
+
+To install git hook for naming convention:
+```
+cp git/hooks/pre-commit .git/hooks/pre-commit
+```
+
+Naming convention:
+```
+[keyword]/[Issue number]-[branch name]
+```
+
+Keywords:
+```
+feature
+bugfix
+doc
+dev
+```
+
+Example:
+```
+feature/29-add-macro-support
+```
