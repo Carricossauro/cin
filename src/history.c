@@ -11,6 +11,18 @@
 */
 code_history *start, *last;
 
+/**
+ * macro_start - beginning of macro_history
+ * macro_last - second to last of macro_history
+*/
+macro_history *macro_start, *macro_last;
+
+/**
+ * include_start - beginning of include_history
+ * include_last - second to last of include_history
+*/
+include_history *include_start, *include_last;
+
 void push_instruction(char* buf, size_t len) {
     static code_history *tmp;
     tmp = malloc(sizeof(code_history));
