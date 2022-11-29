@@ -11,6 +11,7 @@
 #define ON      0x1u
 #define CODE    0x2u
 #define INCLUDE 0x4u
+#define MACRO   0x8u
 
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
@@ -65,6 +66,9 @@ int main() {
                 if (!strncmp("#include", line, 8)) {
                     push_include(line, len);
                     status |= INCLUDE;
+                } else {
+                    push_macro(line, len);
+                    status |= MACRO;
                 }
             } else {
                 push_instruction(line, len);
@@ -76,12 +80,15 @@ int main() {
             if (compile_status != 0) {
                 if (status & CODE) {
                     pop_instruction();
-                    status &= ~CODE;
                 } else if (status & INCLUDE) {
                     pop_include();
-                    status &= ~INCLUDE;
+                } else if (status & MACRO) {
+                    pop_macro();
                 }
             }
+            status &= ~CODE;
+            status &= ~INCLUDE;
+            status &= ~MACRO;
 
             delete_files();
         }
