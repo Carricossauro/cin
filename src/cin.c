@@ -8,7 +8,8 @@
 
 #define CIN_VERSION     "v1.1.0"
 
-#define ON 0x1u
+#define ON      0x1u
+#define CODE    0x2u
 
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
@@ -63,12 +64,15 @@ int main() {
                 // ignore macro
             } else {
                 push_instruction(line, len);
+                status |= CODE;
             }
             write_to_file();
 
             compile_status = compile_and_run();
             if (compile_status != 0) {
-                pop_instruction();
+                if (status & CODE) {
+                    pop_instruction();
+                }
             }
 
             delete_files();
