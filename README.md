@@ -3,7 +3,7 @@
 
 ## How it works
 
-All inputs given are stored and added to a file in /tmp directory. It is then compiled by gcc. If input results in error, that line is removed. The program currently supports C code (no macros) written in one line.
+All inputs given are stored and added to a file in /tmp directory. It is then compiled by gcc. If input results in error, that line is removed. The program currently supports C code (with macros) written in one line.
 
 ## How to install
 
