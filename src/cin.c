@@ -48,6 +48,7 @@ int main() {
     size_t len;
     size_t _x_;
     struct stat st = {0};
+    int compile_status;
 
     if (stat("/tmp/cin", &st) == -1) {
         mkdir("/tmp/cin", 0700);
@@ -72,7 +73,10 @@ int main() {
             }
             write_to_file();
 
-            compile_and_run();
+            compile_status = compile_and_run();
+            if (compile_status != 0) {
+                pop_instruction();
+            }
 
             delete_files();
         }

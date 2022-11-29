@@ -18,9 +18,17 @@ void push_instruction(char* buf, size_t len) {
     strcpy(tmp->buffer, buf);
     tmp->length = len;
     tmp->next = NULL;
+    tmp->prev = last;
     
     last->next = tmp;
     last = tmp;
+}
+
+void pop_instruction() {
+    last = last->prev;
+
+    free(last->next);
+    last->next = NULL;
 }
 
 void init_history() {
@@ -29,4 +37,5 @@ void init_history() {
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
     last = start;
+    last->prev = NULL;
 }
