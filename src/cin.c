@@ -16,15 +16,22 @@
 
 #define CIN_VERSION     "v1.2.1"
 
-#define ON      0x1u
-#define CODE    0x2u
-#define INCLUDE 0x4u
-#define MACRO   0x8u
-
 #define INCLUDE_STR      "#include"
 #define INCLUDE_STR_SIZE 8
 #define DEFINE_STR       "#define"
 #define DEFINE_STR_SIZE  7
+
+/*************************************************************/
+/*                      TYPEDEF SECTION                      */
+/*************************************************************/
+
+typedef enum {
+    ON,
+    CODE,
+    INCLUDE,
+    MACRO,
+    OFF
+} status_t;
 
 /*************************************************************/
 /*                 LOCAL FUNCTION PROTOTYPES                 */
@@ -33,14 +40,13 @@
 void show_cin_info();
 void show_prompt();
 void handle_exit();
-void clear_flags();
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
 int main() {
-    unsigned char status = ON;
+    status_t status = ON;
     char buffer[MAX_STRING_SIZE];
     char *line;
     size_t len;
@@ -57,39 +63,37 @@ int main() {
     _x_ = MAX_STRING_SIZE;
     line = buffer;
     init_history();
-    while (status & ON) {
+    while (status != OFF) {
         show_prompt();
         len = getline(&line, &_x_, stdin);
 
         if (len > 2 && line[0] == ':' && line[1] == 'q') {
-            status &= ~ON;
+            status = OFF;
         } else {
             if (line[0] == '#') {
                 if (!strncmp(INCLUDE_STR, line, INCLUDE_STR_SIZE)) {
                     push_include(line, len);
-                    status |= INCLUDE;
+                    status = INCLUDE;
                 } else if (!strncmp(DEFINE_STR, line, DEFINE_STR_SIZE)) {
                     push_macro(line, len);
-                    status |= MACRO;
+                    status = MACRO;
                 }
             } else {
                 push_instruction(line, len);
-                status |= CODE;
+                status = CODE;
             }
             write_to_file();
 
             compile_status = compile_and_run();
             if (compile_status != 0) {
-                if (status & CODE) {
+                if (status == CODE) {
                     pop_instruction();
-                } else if (status & INCLUDE) {
+                } else if (status == INCLUDE) {
                     pop_include();
-                } else if (status & MACRO) {
+                } else if (status == MACRO) {
                     pop_macro();
                 }
             }
-
-            clear_flags(&status);
 
             delete_files();
         }
@@ -110,10 +114,4 @@ void show_prompt() {
 
 void handle_exit() {
     delete_dir();
-}
-
-void clear_flags(unsigned char *status) {
-    *status &= ~CODE;
-    *status &= ~INCLUDE;
-    *status &= ~MACRO;
 }
