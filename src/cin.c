@@ -14,7 +14,7 @@
 /*                      DEFINE SECTION                       */
 /*************************************************************/
 
-#define CIN_VERSION     "v1.2.1"
+#define CIN_VERSION     "v1.2.2"
 
 #define INCLUDE_STR      "#include"
 #define INCLUDE_STR_SIZE 8
