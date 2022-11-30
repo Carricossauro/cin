@@ -96,15 +96,20 @@ int compile_and_run() {
         }
     }
 
-    i = 0;
-    while (read(p[0], &c, 1)) {
-        if (i >= output_history) {
-            write(1, &c, 1);
-        }
+    if (!exec_status) {
+        i = 0;
+        while (read(p[0], &c, 1)) {
+            if (i >= output_history) {
+                write(1, &c, 1);
+            }
 
-        i++;
+            i++;
+        }
+        if (i != output_history) {
+            write(1, "\n", 1);
+            output_history = i;
+        }
     }
-    output_history = i;
 
 
     close(p[0]);

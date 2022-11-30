@@ -101,11 +101,11 @@ int main() {
 }
 
 void show_cin_info() {
-    printf("cin - %s", CIN_VERSION);
+    printf("cin - %s\n", CIN_VERSION);
 }
 
 void show_prompt() {
-    printf("\n>> ");
+    printf(">> ");
 }
 
 void handle_exit() {
