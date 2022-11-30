@@ -6,24 +6,15 @@
 /*************************************************************/
 
 #include "macros.h"
+#include "history_struct.h"
 
 #include <stddef.h>
-
-/*************************************************************/
-/*                      TYPEDEF SECTION                      */
-/*************************************************************/
-
-typedef struct code_history_t {
-    char buffer[MAX_STRING_SIZE];
-    size_t length;
-    struct code_history_t *next, *prev;
-} code_history;
 
 /*************************************************************/
 /*                     VARIABLE SECTION                      */
 /*************************************************************/
 
-extern code_history *start, *last;
+extern history *start, *last;
 
 /*************************************************************/
 /*                    FUNCTION PROTOTYPES                    */

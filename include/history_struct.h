@@ -1,21 +1,20 @@
-#ifndef HISTORY
-#define HISTORY
+#ifndef HISTORY_STRUCT
+#define HISTORY_STRUCT
 
 /*************************************************************/
 /*                      INCLUDE SECTION                      */
 /*************************************************************/
 
-#include "macros.h"
-#include "code_history.h"
-#include "include_history.h"
-#include "macro_history.h"
-
 #include <stddef.h>
 
 /*************************************************************/
-/*                    FUNCTION PROTOTYPES                    */
+/*                      TYPEDEF SECTION                      */
 /*************************************************************/
 
-void init_history();
+typedef struct history_t {
+    char buffer[MAX_STRING_SIZE];
+    size_t length;
+    struct history_t *next, *prev;
+} history;
 
-#endif // HISTORY
+#endif
