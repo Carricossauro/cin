@@ -18,7 +18,7 @@
 /*************************************************************/
 
 void init_history() {
-    start = malloc(sizeof(code_history));
+    start = malloc(sizeof(history));
     
     strcpy(start->buffer, MAIN_SIGNATURE);
     start->length = strlen(MAIN_SIGNATURE);
@@ -27,4 +27,7 @@ void init_history() {
 
     include_start = NULL;
     include_last = NULL;
+
+    macro_start = NULL;
+    macro_last = NULL;
 }

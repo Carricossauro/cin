@@ -12,18 +12,18 @@
 /*************************************************************/
 
 /**
- * start - beginning of code_history
- * last - second to last of code_history
+ * start - beginning of code history
+ * last - second to last of code history
 */
-code_history *start, *last;
+history *start, *last;
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
 void push_instruction(char* buf, size_t len) {
-    static code_history *tmp;
-    tmp = malloc(sizeof(code_history));
+    static history *tmp;
+    tmp = malloc(sizeof(history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;

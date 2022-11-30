@@ -11,6 +11,9 @@
 
 #include "files.h"
 #include "history.h"
+#include "code_history.h"
+#include "include_history.h"
+#include "macro_history.h"
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
@@ -21,22 +24,20 @@ void write_to_file() {
     file = open(FILENAME_C, O_WRONLY | O_CREAT, 0666);
 
     if (file > 0) {
-        code_history *it;
-        include_history *iit;
-        macro_history *mit;
+        history *it;
 
-        iit = include_start;
-        while (iit) {
-            write(file, iit->buffer, iit->length);
+        it = include_start;
+        while (it) {
+            write(file, it->buffer, it->length);
 
-            iit = iit->next;
+            it = it->next;
         }
 
-        mit = macro_start;
-        while (mit) {
-            write(file, mit->buffer, mit->length);
+        it = macro_start;
+        while (it) {
+            write(file, it->buffer, it->length);
 
-            mit = mit->next;
+            it = it->next;
         }
 
         it = start;

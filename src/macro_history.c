@@ -12,18 +12,18 @@
 /*************************************************************/
 
 /**
- * macro_start - beginning of macro_history
- * macro_last - second to last of macro_history
+ * macro_start - beginning of macro history
+ * macro_last - second to last of macro history
 */
-macro_history *macro_start, *macro_last;
+history *macro_start, *macro_last;
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
 void push_macro(char* buf, size_t len) {
-    static macro_history *tmp;
-    tmp = malloc(sizeof(macro_history));
+    static history *tmp;
+    tmp = malloc(sizeof(history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;

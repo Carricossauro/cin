@@ -12,18 +12,18 @@
 /*************************************************************/
 
 /**
- * include_start - beginning of include_history
- * include_last - second to last of include_history
+ * include_start - beginning of include history
+ * include_last - second to last of include history
 */
-include_history *include_start, *include_last;
+history *include_start, *include_last;
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
 void push_include(char* buf, size_t len) {
-    static include_history *tmp;
-    tmp = malloc(sizeof(include_history));
+    static history *tmp;
+    tmp = malloc(sizeof(history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
