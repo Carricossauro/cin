@@ -63,6 +63,12 @@ void delete_dir() {
 
 int compile_and_run() {
     static int exec_status;
+    static unsigned int output_history;
+    static unsigned int i;
+    static char c;
+    int p[2];
+
+    pipe(p);
 
     exec_status = -1;
 
@@ -76,13 +82,32 @@ int compile_and_run() {
 
     if (!exec_status) {
         if (fork() == 0) {
+            close(p[0]);
+            dup2(p[1], 1);
+            close(p[1]);
+
             int ret = execlp(OUTPUT, OUTPUT, (char*)NULL);
 
             _exit(ret);
         } else {
+            close(p[1]);
+
            (void)wait(&exec_status);
         }
     }
+
+    i = 0;
+    while (read(p[0], &c, 1)) {
+        if (i >= output_history) {
+            write(1, &c, 1);
+        }
+
+        i++;
+    }
+    output_history = i;
+
+
+    close(p[0]);
 
     return exec_status;
 }
