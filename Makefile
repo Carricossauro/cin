@@ -1,32 +1,18 @@
-CC := gcc
-SCRDIR := src
-INCDIR := include
-BUILDDIR := build
-BINDIR := bin
-CFLAGS := -g
-LIB := -L lib
-INC := -I $(INCDIR)
+include config/config.mk
 
-all: dirs cin.o files.o history.o
+all: $(OBJECTS)
 	@echo "Linking..."
-	@echo "$(CC) $(LIB) $(BUILDDIR)/cin.o $(BUILDDIR)/files.o $(BUILDDIR)/history.o -o $(BINDIR)/cin"; $(CC) $(LIB) $(BUILDDIR)/cin.o $(BUILDDIR)/files.o $(BUILDDIR)/history.o -o bin/cin
+	@echo "$(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
 
-files.o: dirs $(SCRDIR)/files.c
-	@echo "Building files..."
-	@echo "$(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/files.c -o build/files.o"; $(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/files.c -o build/files.o
-
-history.o: dirs $(SCRDIR)/history.c
-	@echo "Building history..."
-	@echo "$(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/history.c -o build/history.o"; $(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/history.c -o build/history.o
-
-cin.o: dirs $(SCRDIR)/cin.c
-	@echo "Building cin..."
-	@echo "$(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/cin.c -o build/cin.o"; $(CC) $(CFLAGS) $(INC) -c $(SCRDIR)/cin.c -o build/cin.o
+$(BUILDDIR)/%.o: $(SRCDIR)/%.c dirs
+	@echo "Building..."
+	@echo "$(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 dirs:
-	@mkdir -p $(BUILDDIR)
-	@mkdir -p $(BINDIR)
+	@echo "Creating directories..."
+	@echo "mkdir -p $(BUILDDIR)"; mkdir -p $(BUILDDIR)
+	@echo "mkdir -p $(BINDIR)"; mkdir -p $(BINDIR)
 
 clean:
 	@echo "Cleaning..."; 
-	@echo "$(RM) -r $(BUILDDIR)/*"; $(RM) -r $(BUILDDIR)/*
+	@echo "$(RM) -r $(BUILDDIR) $(BINDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR)
