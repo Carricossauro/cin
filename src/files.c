@@ -64,24 +64,43 @@ void delete_dir() {
 
 int compile_and_run() {
     static int exec_status;
-    static unsigned int output_history;
+    static unsigned int output_history = 0;
+    static unsigned int error_history = 0;
     static unsigned int i;
     static char c;
     int p[2];
+    int perror[2];
 
     pipe(p);
+    pipe(perror);
 
     exec_status = -1;
 
     if (fork() == 0) {
+        close(perror[0]);
+        dup2(perror[1], 2);
+        close(perror[1]);
         int ret = execlp("gcc", "gcc", FILENAME_C, "-o", OUTPUT, (char*)NULL);
 
         _exit(ret);
     } else {
+        close(perror[1]);
+
         (void)wait(&exec_status);
     }
 
+    i = 0;
+    while (read(perror[0], &c, 1)) {
+        if (i >= error_history) {
+            write(1, &c, 1);
+        }
+
+        i++;
+    }
+
     if (!exec_status) {
+        error_history = i;
+
         if (fork() == 0) {
             close(p[0]);
             dup2(p[1], 1);
