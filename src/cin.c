@@ -7,19 +7,9 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "interface.h"
 #include "files.h"
 #include "history.h"
-
-/*************************************************************/
-/*                      DEFINE SECTION                       */
-/*************************************************************/
-
-#define CIN_VERSION     "v1.2.3"
-
-#define INCLUDE_STR      "#include"
-#define INCLUDE_STR_SIZE 8
-#define DEFINE_STR       "#define"
-#define DEFINE_STR_SIZE  7
 
 /*************************************************************/
 /*                      TYPEDEF SECTION                      */
@@ -37,8 +27,6 @@ typedef enum {
 /*                 LOCAL FUNCTION PROTOTYPES                 */
 /*************************************************************/
 
-void show_cin_info();
-void show_prompt();
 void handle_exit();
 
 /*************************************************************/
@@ -102,14 +90,6 @@ int main() {
     handle_exit();
 
     return 0;
-}
-
-void show_cin_info() {
-    printf("cin - %s\n", CIN_VERSION);
-}
-
-void show_prompt() {
-    printf(">> ");
 }
 
 void handle_exit() {

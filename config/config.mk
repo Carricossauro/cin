@@ -17,6 +17,7 @@ SOURCES :=\
 	$(SRCDIR)/include_history.c\
 	$(SRCDIR)/macro_history.c\
 	$(SRCDIR)/history.c\
+	$(SRCDIR)/interface.c\
 	$(SRCDIR)/cin.c
 
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.c=.o))
