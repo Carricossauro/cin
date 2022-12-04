@@ -60,6 +60,8 @@ void delete_files() {
 
 void delete_dir() {
     remove("/tmp/cin");
+
+    _exit(0);
 }
 
 int compile_and_run() {

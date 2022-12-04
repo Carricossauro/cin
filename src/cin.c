@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 #include <sys/stat.h>
 
 #include "interface.h"
@@ -41,6 +42,11 @@ int main() {
     size_t _x_;
     struct stat st = {0};
     int compile_status;
+
+    signal(SIGTERM, delete_dir);
+    signal(SIGINT, delete_dir);
+    signal(SIGQUIT, delete_dir);
+    signal(SIGHUP, delete_dir);
 
     if (stat("/tmp/cin", &st) == -1) {
         mkdir("/tmp/cin", 0700);
@@ -87,11 +93,7 @@ int main() {
         }
     }
 
-    handle_exit();
+    delete_dir();
 
     return 0;
-}
-
-void handle_exit() {
-    delete_dir();
 }
