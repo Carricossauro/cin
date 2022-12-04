@@ -11,7 +11,6 @@
 /*                      DEFINE SECTION                       */
 /*************************************************************/
 
-#define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
