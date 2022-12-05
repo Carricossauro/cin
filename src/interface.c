@@ -18,3 +18,9 @@ void show_cin_info() {
 void show_prompt() {
     printf(">> ");
 }
+
+size_t receive_input(char *line) {
+    size_t _x_ = MAX_STRING_SIZE;
+
+    return getline(&line, &_x_, stdin);
+}

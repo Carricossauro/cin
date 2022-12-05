@@ -2,7 +2,6 @@
 /*                      INCLUDE SECTION                      */
 /*************************************************************/
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
@@ -33,7 +32,6 @@ int main() {
     char buffer[MAX_STRING_SIZE];
     char *line;
     size_t len;
-    size_t _x_;
     struct stat st = {0};
     int compile_status;
 
@@ -48,12 +46,11 @@ int main() {
 
     show_cin_info();
 
-    _x_ = MAX_STRING_SIZE;
     line = buffer;
     init_history();
     while (status != OFF) {
         show_prompt();
-        len = getline(&line, &_x_, stdin);
+        len = receive_input(line);
 
         if (len > 2 && line[0] == ':' && line[1] == 'q') {
             status = OFF;
