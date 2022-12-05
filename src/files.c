@@ -94,7 +94,7 @@ int compile_and_run() {
     i = 0;
     while (read(perror[0], &c, 1)) {
         if (i >= error_history) {
-            write(1, &c, 1);
+            write(2, &c, 1);
         }
 
         i++;
