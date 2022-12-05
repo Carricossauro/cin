@@ -42,8 +42,8 @@ int main() {
     signal(SIGQUIT, delete_dir);
     signal(SIGHUP, delete_dir);
 
-    if (stat("/tmp/cin", &st) == -1) {
-        mkdir("/tmp/cin", 0700);
+    if (stat(DIRECTORY, &st) == -1) {
+        mkdir(DIRECTORY, 0700);
     }
 
     show_cin_info();
