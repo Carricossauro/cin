@@ -13,6 +13,7 @@ INC := -I $(INCDIR)
 
 SOURCES :=\
 	$(SRCDIR)/files.c\
+	$(SRCDIR)/input.c\
 	$(SRCDIR)/code_history.c\
 	$(SRCDIR)/include_history.c\
 	$(SRCDIR)/macro_history.c\

@@ -2,25 +2,24 @@
 /*                      INCLUDE SECTION                      */
 /*************************************************************/
 
-#include <stdio.h>
+#include <regex.h>
+#include <stddef.h>
 
-#include "interface.h"
-#include "macros.h"
+#include "input.h"
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
-void show_cin_info() {
-    printf("cin - %s\n", CIN_VERSION);
-}
+bool compare_regex(char *line, char *pattern) {
+    static regex_t string;
+    static int regex_return = -1;
 
-void show_prompt() {
-    printf(">> ");
-}
+    if (line != NULL) {
+        regex_return = regcomp(&string, line, 0);
+    }
+    
+    regex_return += regexec(&string, pattern, 0, NULL, 0);
 
-size_t receive_input(char *line) {
-    size_t _x_ = MAX_STRING_SIZE;
-
-    return getline(&line, &_x_, stdin);
+    return regex_return == 0;
 }

@@ -2,7 +2,6 @@
 /*                      INCLUDE SECTION                      */
 /*************************************************************/
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
@@ -11,6 +10,7 @@
 #include "interface.h"
 #include "files.h"
 #include "history.h"
+#include "input.h"
 
 /*************************************************************/
 /*                      TYPEDEF SECTION                      */
@@ -25,12 +25,6 @@ typedef enum {
 } status_t;
 
 /*************************************************************/
-/*                 LOCAL FUNCTION PROTOTYPES                 */
-/*************************************************************/
-
-void handle_exit();
-
-/*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
@@ -39,7 +33,6 @@ int main() {
     char buffer[MAX_STRING_SIZE];
     char *line;
     size_t len;
-    size_t _x_;
     struct stat st = {0};
     int compile_status;
 
@@ -48,34 +41,34 @@ int main() {
     signal(SIGQUIT, delete_dir);
     signal(SIGHUP, delete_dir);
 
-    if (stat("/tmp/cin", &st) == -1) {
-        mkdir("/tmp/cin", 0700);
+    if (stat(DIRECTORY, &st) == -1) {
+        mkdir(DIRECTORY, 0700);
     }
 
     show_cin_info();
 
-    _x_ = MAX_STRING_SIZE;
     line = buffer;
     init_history();
     while (status != OFF) {
         show_prompt();
-        len = getline(&line, &_x_, stdin);
+        len = receive_input(line);
 
-        if (len > 2 && line[0] == ':' && line[1] == 'q') {
-            status = OFF;
+        if (len > 1 && line[0] == ':') {
+            if (compare_regex(line, EXIT_STR)) {
+                status = OFF;
+            }
         } else {
-            if (line[0] == '#') {
-                if (!strncmp(INCLUDE_STR, line, INCLUDE_STR_SIZE)) {
-                    push_include(line, len);
-                    status = INCLUDE;
-                } else if (!strncmp(DEFINE_STR, line, DEFINE_STR_SIZE)) {
-                    push_macro(line, len);
-                    status = MACRO;
-                }
+            if (compare_regex(line, INCLUDE_STR)) {
+                push_include(line, len);
+                status = INCLUDE;
+            } else if (compare_regex(NULL, DEFINE_STR)) {
+                push_macro(line, len);
+                status = MACRO;
             } else {
                 push_instruction(line, len);
                 status = CODE;
             }
+
             write_to_file();
 
             compile_status = compile_and_run();
