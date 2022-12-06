@@ -13,6 +13,9 @@
 
 #define MAX_STRING_SIZE  1024
 #define EXIT_STR         ":exit\n"
+#define CLEAR_STR        ":clear\n"
+#define HELP_STR         ":help\n"
+#define SHOW_STR         ":show\n"
 #define INCLUDE_STR      "#include.*"
 #define DEFINE_STR       "#define.*"
 
