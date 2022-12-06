@@ -10,6 +10,7 @@
 #include "interface.h"
 #include "files.h"
 #include "history.h"
+#include "input.h"
 
 /*************************************************************/
 /*                      TYPEDEF SECTION                      */
@@ -52,21 +53,22 @@ int main() {
         show_prompt();
         len = receive_input(line);
 
-        if (len > 2 && line[0] == ':' && line[1] == 'q') {
-            status = OFF;
+        if (len > 1 && line[0] == ':') {
+            if (compare_regex(line, EXIT_STR)) {
+                status = OFF;
+            }
         } else {
-            if (line[0] == '#') {
-                if (!strncmp(INCLUDE_STR, line, INCLUDE_STR_SIZE)) {
-                    push_include(line, len);
-                    status = INCLUDE;
-                } else if (!strncmp(DEFINE_STR, line, DEFINE_STR_SIZE)) {
-                    push_macro(line, len);
-                    status = MACRO;
-                }
+            if (compare_regex(line, INCLUDE_STR)) {
+                push_include(line, len);
+                status = INCLUDE;
+            } else if (compare_regex(NULL, DEFINE_STR)) {
+                push_macro(line, len);
+                status = MACRO;
             } else {
                 push_instruction(line, len);
                 status = CODE;
             }
+
             write_to_file();
 
             compile_status = compile_and_run();
