@@ -5,7 +5,7 @@ INCDIR := include
 BUILDDIR := build
 BINDIR := bin
 
-CFLAGS := -g
+CFLAGS :=
 TARGET := $(BINDIR)/cin
 
 LIB := -L lib
