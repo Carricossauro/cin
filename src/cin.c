@@ -54,6 +54,7 @@ int main() {
         len = receive_input(line);
 
         if (len > 1 && line[0] == ':') {
+            line[len - 1] = 0;
             if (compare_regex(line, EXIT_STR)) {
                 status = OFF;
             } else if (compare_regex(NULL, SHOW_STR)) {
@@ -62,6 +63,8 @@ int main() {
                 clear_screen();
             } else if (compare_regex(NULL, HELP_STR)) {
                 write_help();
+            } else {
+                write_error("command %s not recognized", &line[1]);
             }
         } else {
             if (compare_regex(line, INCLUDE_STR)) {

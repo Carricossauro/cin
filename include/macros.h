@@ -12,10 +12,10 @@
 #define OUTPUT          "/tmp/cin/out.app"
 
 #define MAX_STRING_SIZE  1024
-#define EXIT_STR         ":exit\n"
-#define CLEAR_STR        ":clear\n"
-#define HELP_STR         ":help\n"
-#define SHOW_STR         ":show\n"
+#define EXIT_STR         ":exit"
+#define CLEAR_STR        ":clear"
+#define HELP_STR         ":help"
+#define SHOW_STR         ":show"
 #define INCLUDE_STR      "#include.*"
 #define DEFINE_STR       "#define.*"
 
