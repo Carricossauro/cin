@@ -16,3 +16,8 @@ dirs:
 clean:
 	@echo "Cleaning..."; 
 	@echo "$(RM) -r $(BUILDDIR) $(BINDIR)"; $(RM) -r $(BUILDDIR) $(BINDIR)
+
+debug: .dbg all
+
+.dbg:
+	$(eval CFLAGS += -g)
