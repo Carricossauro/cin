@@ -58,6 +58,8 @@ int main() {
                 status = OFF;
             } else if (compare_regex(NULL, SHOW_STR)) {
                 write_to(1);
+            } else if (compare_regex(NULL, HELP_STR)) {
+                write_help();
             }
         } else {
             if (compare_regex(line, INCLUDE_STR)) {
