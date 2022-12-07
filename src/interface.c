@@ -29,6 +29,10 @@ void write_help() {
     printf("    - exit: exits cin\n");
 }
 
+void clear_screen() {
+    printf("\e[1;1H\e[2J");
+}
+
 size_t receive_input(char *line) {
     size_t _x_ = MAX_STRING_SIZE;
 
