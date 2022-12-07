@@ -24,33 +24,37 @@ void write_to_file() {
     file = open(FILENAME_C, O_WRONLY | O_CREAT, 0666);
 
     if (file > 0) {
-        history *it;
-
-        it = include_start;
-        while (it) {
-            write(file, it->buffer, it->length);
-
-            it = it->next;
-        }
-
-        it = macro_start;
-        while (it) {
-            write(file, it->buffer, it->length);
-
-            it = it->next;
-        }
-
-        it = start;
-        while (it) {
-            write(file, it->buffer, it->length);
-
-            it = it->next;
-        }
-
-        write(file, "}\n", 2);
+        write_to(file);
 
         close(file);
     } else exit(errno);
+}
+
+void write_to(int wd) {
+    history *it;
+
+    it = include_start;
+    while (it) {
+        write(wd, it->buffer, it->length);
+
+        it = it->next;
+    }
+
+    it = macro_start;
+    while (it) {
+        write(wd, it->buffer, it->length);
+
+        it = it->next;
+    }
+
+    it = start;
+    while (it) {
+        write(wd, it->buffer, it->length);
+
+        it = it->next;
+    }
+
+    write(wd, "}\n", 2);
 }
 
 void delete_files() {
