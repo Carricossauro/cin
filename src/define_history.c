@@ -2,7 +2,7 @@
 /*                      INCLUDE SECTION                      */
 /*************************************************************/
 
-#include "macro_history.h"
+#include "define_history.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -12,42 +12,42 @@
 /*************************************************************/
 
 /**
- * macro_start - beginning of macro history
- * macro_last - second to last of macro history
+ * define_start - beginning of define history
+ * define_last - second to last of define history
 */
-history *macro_start, *macro_last;
+history *define_start, *define_last;
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
-void push_macro(char* buf, size_t len) {
+void push_define(char* buf, size_t len) {
     static history *tmp;
     tmp = malloc(sizeof(history));
 
     strcpy(tmp->buffer, buf);
     tmp->length = len;
     tmp->next = NULL;
-    tmp->prev = macro_last;
+    tmp->prev = define_last;
 
-    if (macro_start == NULL) {
-        macro_start = tmp;
-        macro_last = tmp;
+    if (define_start == NULL) {
+        define_start = tmp;
+        define_last = tmp;
     } else {
-        macro_last->next = tmp;
-        macro_last = tmp;
+        define_last->next = tmp;
+        define_last = tmp;
     }
 }
 
-void pop_macro() {
-    if (macro_last == macro_start) {
-        free(macro_start);
-        macro_start = NULL;
-        macro_last = NULL;
+void pop_define() {
+    if (define_last == define_start) {
+        free(define_start);
+        define_start = NULL;
+        define_last = NULL;
     } else {
-        macro_last = macro_last->prev;
+        define_last = define_last->prev;
 
-        free(macro_last->next);
-        macro_last->next = NULL;
+        free(define_last->next);
+        define_last->next = NULL;
     }
 }

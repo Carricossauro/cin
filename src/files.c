@@ -13,7 +13,7 @@
 #include "history.h"
 #include "code_history.h"
 #include "include_history.h"
-#include "macro_history.h"
+#include "define_history.h"
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
@@ -40,12 +40,16 @@ void write_to(int wd) {
         it = it->next;
     }
 
-    it = macro_start;
+    write(wd, "\n", 1);
+
+    it = define_start;
     while (it) {
         write(wd, it->buffer, it->length);
 
         it = it->next;
     }
+
+    write(wd, "\n", 1);
 
     it = start;
     while (it) {

@@ -27,6 +27,6 @@ void init_history() {
     include_start = NULL;
     include_last = NULL;
 
-    macro_start = NULL;
-    macro_last = NULL;
+    define_start = NULL;
+    define_last = NULL;
 }

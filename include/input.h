@@ -8,9 +8,25 @@
 #include <stdbool.h>
 
 /*************************************************************/
+/*                      TYPEDEF SECTION                      */
+/*************************************************************/
+
+typedef enum {
+    ON,
+    CODE,
+    INCLUDE,
+    DEFINE,
+    CLEAR,
+    HELP,
+    SHOW,
+    WRONG_COMMAND,
+    OFF
+} status_t;
+
+/*************************************************************/
 /*                    FUNCTION PROTOTYPES                    */
 /*************************************************************/
 
-bool compare_regex(char *line, char *candidate);
+status_t compare_regex(char *line);
 
 #endif // INPUT

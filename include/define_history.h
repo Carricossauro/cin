@@ -1,5 +1,5 @@
-#ifndef MACRO_HIST
-#define MACRO_HIST
+#ifndef DEFINE_HIST
+#define DEFINE_HIST
 
 /*************************************************************/
 /*                      INCLUDE SECTION                      */
@@ -14,13 +14,13 @@
 /*                     VARIABLE SECTION                      */
 /*************************************************************/
 
-extern history *macro_start, *macro_last;
+extern history *define_start, *define_last;
 
 /*************************************************************/
 /*                    FUNCTION PROTOTYPES                    */
 /*************************************************************/
 
-void push_macro(char* buf, size_t len);
-void pop_macro();
+void push_define(char* buf, size_t len);
+void pop_define();
 
 #endif

@@ -8,7 +8,7 @@
 #include "macros.h"
 #include "code_history.h"
 #include "include_history.h"
-#include "macro_history.h"
+#include "define_history.h"
 
 #include <stddef.h>
 

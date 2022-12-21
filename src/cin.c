@@ -13,18 +13,6 @@
 #include "input.h"
 
 /*************************************************************/
-/*                      TYPEDEF SECTION                      */
-/*************************************************************/
-
-typedef enum {
-    ON,
-    CODE,
-    INCLUDE,
-    MACRO,
-    OFF
-} status_t;
-
-/*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
@@ -53,31 +41,34 @@ int main() {
         show_prompt();
         len = receive_input(line);
 
-        if (len > 1 && line[0] == ':') {
-            line[len - 1] = 0;
-            if (compare_regex(line, EXIT_STR)) {
-                status = OFF;
-            } else if (compare_regex(NULL, SHOW_STR)) {
-                write_to(1);
-            } else if (compare_regex(NULL, CLEAR_STR)) {
-                clear_screen();
-            } else if (compare_regex(NULL, HELP_STR)) {
-                write_help();
-            } else {
-                write_error("command %s not recognized", &line[1]);
-            }
-        } else {
-            if (compare_regex(line, INCLUDE_STR)) {
-                push_include(line, len);
-                status = INCLUDE;
-            } else if (compare_regex(NULL, DEFINE_STR)) {
-                push_macro(line, len);
-                status = MACRO;
-            } else {
-                push_instruction(line, len);
-                status = CODE;
-            }
+        status = compare_regex(line);
 
+        switch (status) {
+            case SHOW:
+                write_to(1);
+                break;
+            case CLEAR:
+                clear_screen();
+                break;
+            case HELP:
+                write_help();
+                break;
+            case WRONG_COMMAND:
+                line[len - 1] = 0;
+                write_error("command %s not recognized", &line[1]);
+                break;
+            case INCLUDE:
+                push_include(line, len);
+                break;
+            case DEFINE:
+                push_define(line, len);
+                break;
+            case CODE:
+                push_instruction(line, len);
+                break;
+        }
+
+        if (status == CODE || status == DEFINE || status == INCLUDE) {
             write_to_file();
 
             compile_status = compile_and_run();
@@ -86,8 +77,8 @@ int main() {
                     pop_instruction();
                 } else if (status == INCLUDE) {
                     pop_include();
-                } else if (status == MACRO) {
-                    pop_macro();
+                } else if (status == DEFINE) {
+                    pop_define();
                 }
             }
 
