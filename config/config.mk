@@ -5,7 +5,7 @@ INCDIR := include
 BUILDDIR := build
 BINDIR := bin
 
-CFLAGS :=
+CFLAGS := -g
 TARGET := $(BINDIR)/cin
 
 LIB := -L lib
@@ -16,7 +16,7 @@ SOURCES :=\
 	$(SRCDIR)/input.c\
 	$(SRCDIR)/code_history.c\
 	$(SRCDIR)/include_history.c\
-	$(SRCDIR)/macro_history.c\
+	$(SRCDIR)/define_history.c\
 	$(SRCDIR)/history.c\
 	$(SRCDIR)/interface.c\
 	$(SRCDIR)/cin.c
