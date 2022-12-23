@@ -43,7 +43,7 @@ void clear_screen() {
 
 void receive_input(char *line, status_t *status) {
     size_t _x_ = MAX_STRING_SIZE;
-    int len;
+    static int len;
 
     len = getline(&line, &_x_, stdin);
 
