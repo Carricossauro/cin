@@ -39,34 +39,7 @@ int main() {
     init_history();
     while (status != OFF) {
         show_prompt();
-        len = receive_input(line);
-
-        status = compare_regex(line);
-
-        switch (status) {
-            case SHOW:
-                write_to(1);
-                break;
-            case CLEAR:
-                clear_screen();
-                break;
-            case HELP:
-                write_help();
-                break;
-            case WRONG_COMMAND:
-                line[len - 1] = 0;
-                write_error("command %s not recognized", &line[1]);
-                break;
-            case INCLUDE:
-                push_include(line, len);
-                break;
-            case DEFINE:
-                push_define(line, len);
-                break;
-            case CODE:
-                push_instruction(line, len);
-                break;
-        }
+        receive_input(line, &status);
 
         if (status == CODE || status == DEFINE || status == INCLUDE) {
             write_to_file();

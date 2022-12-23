@@ -5,7 +5,9 @@
 #include <stdio.h>
 
 #include "interface.h"
+#include "files.h"
 #include "macros.h"
+#include "history.h"
 
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
@@ -39,8 +41,36 @@ void clear_screen() {
     printf("\e[1;1H\e[2J");
 }
 
-size_t receive_input(char *line) {
+void receive_input(char *line, status_t *status) {
     size_t _x_ = MAX_STRING_SIZE;
+    int len;
 
-    return getline(&line, &_x_, stdin);
+    len = getline(&line, &_x_, stdin);
+
+    *status = compare_regex(line);
+
+    switch (*status) {
+        case SHOW:
+            write_to(1);
+            break;
+        case CLEAR:
+            clear_screen();
+            break;
+        case HELP:
+            write_help();
+            break;
+        case WRONG_COMMAND:
+            line[len - 1] = 0;
+            write_error("command %s not recognized", &line[1]);
+            break;
+        case INCLUDE:
+            push_include(line, len);
+            break;
+        case DEFINE:
+            push_define(line, len);
+            break;
+        case CODE:
+            push_instruction(line, len);
+            break;
+    }
 }
