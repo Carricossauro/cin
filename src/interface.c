@@ -46,12 +46,6 @@ void write_help() {
     printf("    - exit: exits cin\n");
 }
 
-void write_error(char *fmt, char *v) {
-    printf("Error: ");
-    printf(fmt, v);
-    putchar('\n');
-}
-
 void clear_screen() {
     printf("\e[1;1H\e[2J");
 }
