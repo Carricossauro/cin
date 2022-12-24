@@ -51,6 +51,9 @@ void write_to(int wd) {
 
     it = start;
     while (it) {
+        if (it != start) {
+            write(wd, TAB, 4);
+        }
         write(wd, it->buffer, it->length);
         write(wd, "\n", 1);
 
