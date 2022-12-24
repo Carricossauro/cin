@@ -148,3 +148,13 @@ int compile_and_run() {
 
     return exec_status;
 }
+
+void write_error(char *fmt, char *v) {
+    char error_buffer[MAX_STRING_SIZE];
+    int len;
+    len = sprintf(error_buffer, fmt, v);
+
+    write(2, "Error: ", 7);
+    write(2, error_buffer, len);
+    write(2, "\n", 1);
+}
