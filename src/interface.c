@@ -10,6 +10,21 @@
 #include "history.h"
 
 /*************************************************************/
+/*                      DEFINE SECTION                       */
+/*************************************************************/
+
+#define FLAG_STRING          0x1u
+#define FLAG_CHAR            0x2u
+#define FLAG_CURLY_BRACKETS  0x4u
+
+#define STRING_QUOTES        '"'
+#define CHAR_QUOTES          '\''
+#define SEMICOLON            ';'
+
+#define CURLY_BRACKETS_OPEN  '{'
+#define CURLY_BRACKETS_CLOSE '}'
+
+/*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
 
@@ -44,8 +59,13 @@ void clear_screen() {
 void receive_input(char *line, status_t *status) {
     size_t _x_ = MAX_STRING_SIZE;
     static int len;
+    static char *it;
+    static char *startLine;
+    static unsigned char flags;
 
     len = getline(&line, &_x_, stdin);
+    len--;
+    line[len] = 0;
 
     *status = compare_regex(line);
 
@@ -60,17 +80,44 @@ void receive_input(char *line, status_t *status) {
             write_help();
             break;
         case WRONG_COMMAND:
-            line[len - 1] = 0;
             write_error("command %s not recognized", &line[1]);
-            break;
-        case INCLUDE:
-            push_include(line, len);
             break;
         case DEFINE:
             push_define(line, len);
             break;
+        case INCLUDE:
+            push_include(line, len);
+            break;
         case CODE:
-            push_instruction(line, len);
+            startLine = line;
+            flags = 0u;
+            for (it = line, len = 0; *it; it++, len++) {
+                if (*it == CHAR_QUOTES) {
+                    if (flags & FLAG_CHAR && *(it - 1) != '\\') {
+                        flags &= ~FLAG_CHAR;
+                    } else {
+                        flags |= FLAG_CHAR;
+                    }
+                } else if (*it == STRING_QUOTES) {
+                    if (flags & FLAG_STRING && *(it - 1) != '\\') {
+                        flags &= ~FLAG_STRING;
+                    } else {
+                        flags |= FLAG_STRING;
+                    }
+                } else if (*it == SEMICOLON) {
+                    if (!(flags & FLAG_CHAR) && !(flags & FLAG_STRING)) {
+                        startLine[len + 1] = 0;
+                        push_instruction(startLine, len + 1);
+
+                        flags = 0u;
+                        len = -1;
+
+                        it++;
+                        startLine = it + 1;
+                    }
+                }
+            }
+
             break;
     }
 }
