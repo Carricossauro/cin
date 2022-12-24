@@ -2,6 +2,12 @@
 #define INTERFACE
 
 /*************************************************************/
+/*                      INCLUDE SECTION                      */
+/*************************************************************/
+
+#include "input.h"
+
+/*************************************************************/
 /*                    FUNCTION PROTOTYPES                    */
 /*************************************************************/
 
@@ -10,6 +16,6 @@ void show_prompt();
 void write_help();
 void clear_screen();
 void write_error(char *fmt, char *v);
-size_t receive_input(char *line);
+void receive_input(char *line, status_t *status);
 
 #endif

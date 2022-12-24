@@ -13,6 +13,8 @@
 
 #define MAX_STRING_SIZE  1024
 
-#define MAIN_SIGNATURE  "int main(int argc, char**argv) {\n"
+#define TAB "    "
+
+#define MAIN_SIGNATURE  "int main(int argc, char**argv) {"
 
 #endif

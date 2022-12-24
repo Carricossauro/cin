@@ -36,24 +36,26 @@ void write_to(int wd) {
     it = include_start;
     while (it) {
         write(wd, it->buffer, it->length);
+        write(wd, "\n", 1);
 
         it = it->next;
     }
-
-    write(wd, "\n", 1);
 
     it = define_start;
     while (it) {
         write(wd, it->buffer, it->length);
+        write(wd, "\n", 1);
 
         it = it->next;
     }
 
-    write(wd, "\n", 1);
-
     it = start;
     while (it) {
+        if (it != start) {
+            write(wd, TAB, 4);
+        }
         write(wd, it->buffer, it->length);
+        write(wd, "\n", 1);
 
         it = it->next;
     }
