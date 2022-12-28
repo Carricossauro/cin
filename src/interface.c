@@ -83,6 +83,7 @@ void receive_input(char *line, status_t *status) {
             push_include(line, len);
             break;
         case CODE:
+            reset_counter();
             startLine = line;
             flags = 0u;
             for (it = line, len = 0; *it; it++, len++) {
@@ -111,7 +112,6 @@ void receive_input(char *line, status_t *status) {
                     }
                 }
             }
-
             break;
     }
 }

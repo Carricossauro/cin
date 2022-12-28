@@ -22,5 +22,6 @@ extern history *start, *last;
 
 void push_instruction(char* buf, size_t len);
 void pop_instruction();
+void reset_counter();
 
 #endif

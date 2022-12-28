@@ -17,9 +17,18 @@
 */
 history *start, *last;
 
+/**
+ * counter - number of added instructions
+*/
+static int counter;
+
 /*************************************************************/
 /*                   FUNCTION IMPLEMENTATION                 */
 /*************************************************************/
+
+void reset_counter() {
+    counter = 0;
+}
 
 void push_instruction(char* buf, size_t len) {
     static history *tmp;
@@ -32,11 +41,15 @@ void push_instruction(char* buf, size_t len) {
     
     last->next = tmp;
     last = tmp;
+    counter++;
 }
 
 void pop_instruction() {
-    last = last->prev;
+    while (counter != 0) {
+        last = last->prev;
 
-    free(last->next);
-    last->next = NULL;
+        free(last->next);
+        last->next = NULL;
+        counter--;
+    }
 }
