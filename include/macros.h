@@ -5,7 +5,7 @@
 /*                      DEFINE SECTION                       */
 /*************************************************************/
 
-#define CIN_VERSION     "v1.2.7"
+#define CIN_VERSION     "v1.2.8"
 
 #define DIRECTORY       "/tmp/cin"
 #define FILENAME_C      "/tmp/cin/tmp_code.c"
