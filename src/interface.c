@@ -99,6 +99,14 @@ void receive_input(char *line, status_t *status) {
                     } else {
                         flags |= FLAG_STRING;
                     }
+                } else if (*it == CURLY_BRACKETS_OPEN) {
+                    if (!(flags & FLAG_CHAR) && !(flags & FLAG_STRING)) {
+                        flags |= FLAG_CURLY_BRACKETS;
+                    }
+                } else if (*it == CURLY_BRACKETS_CLOSE) {
+                    if (!(flags & FLAG_CHAR) && !(flags & FLAG_STRING)) {
+                        flags &= ~FLAG_CURLY_BRACKETS;
+                    }
                 } else if (*it == SEMICOLON) {
                     if (!(flags & FLAG_CHAR) && !(flags & FLAG_STRING)) {
                         startLine[len + 1] = 0;
