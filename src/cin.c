@@ -18,7 +18,7 @@
 
 int main() {
     status_t status = ON;
-    char buffer[MAX_STRING_SIZE];
+    char buffer[MAX_INPUT_SIZE];
     char *line;
     size_t len;
     struct stat st = {0};
